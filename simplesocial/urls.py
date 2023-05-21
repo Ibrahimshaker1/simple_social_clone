@@ -23,4 +23,6 @@ urlpatterns = [
     path("accounts/", include('accounts.urls', namespace='accounts')),
     # to make django urls under accounts/
     path("accounts/", include('django.contrib.auth.urls')),
+    path("test/", views.TestPage.as_view(), name="test"),
+    path("thanks/", views.TanksPage.as_view(), name="thanks"),
 ]
