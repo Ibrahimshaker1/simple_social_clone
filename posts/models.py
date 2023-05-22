@@ -2,13 +2,14 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from simple_social_clone.simplesocial.groups.models import Group
+from django.apps import apps
+Group = apps.get_model('Group', require_ready=True)
 # Create your models here.
 User = get_user_model()
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, related_name='posts')
+    user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
     created_at = models.DateField(auto_now=True)
     message = models.TextField()
     message_html = models.TextField(editable=False)
