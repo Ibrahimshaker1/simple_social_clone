@@ -25,7 +25,7 @@ class UserPosts(generic.ListView):
 
     def get_queryset(self):
         try:
-            self.post.user = User.objects.prefetch_related("posts").get(username__iexact=self.kwargs.get("username"))
+            self.post_user = User.objects.prefetch_related("posts").get(username__iexact=self.kwargs.get("username"))
         except User.DoesNotExist:
             raise Http404
         else:
@@ -66,6 +66,6 @@ class DeletePost(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
         queryset = super().get_queryset()
         return queryset.filter(user_id=self.request.user.id)
 
-    def delete(self, *args,**kwargs):
+    def delete(self, *args, **kwargs):
         messages.success(self.request, "Post Deleted")
         return super().delete(*args, **kwargs)
